@@ -34,8 +34,10 @@
   .top-col:last-child{border-right:none}
   .top-col-divider{border-top:1px solid var(--border);margin-top:13px;padding-top:13px}
   /* Methods column — vertically centre the diagram in remaining space */
-  .methods-col{display:flex;flex-direction:column}
-  .methods-col .flow,.methods-col .flow-wrap{margin-top:auto;margin-bottom:auto}
+  .methods-col{display:flex;flex-direction:column;justify-content:space-between}
+  .methods-col-body{flex:1;display:flex;flex-direction:column;justify-content:flex-start}
+  .methods-col-diagram{flex:1;display:flex;align-items:center;justify-content:center}
+  .methods-col-diagram .flow{margin-top:0}
   /* Methods output summary block */
   .methods-output{margin-top:22px;border:1px solid var(--border);border-radius:5px;
     overflow:hidden;font-size:11px}
@@ -150,27 +152,31 @@
     </div>
     <div class="top-col methods-col">
       <div class="section-header">Methods</div>
-      <div class="section-body">A model-agnostic LLM iteratively processes patients' test reports to
-        extract data points for key clinical metrics, plot trends and create a summary. Prompts include
-        guardrails to avoid hallucinations. Best-practice recommendations are codified and dynamically
-        presented via a personalised rule-based look-up.</div>
-      <div class="methods-output">
-        <div class="methods-output-label">System outputs (per report modality)</div>
-        <div class="methods-output-grid">
-          <div class="mo-item"><span class="mo-icon">⬡</span>
-            <span>Tabular extraction of numerical <em>and</em> non-numerical trends</span></div>
-          <div class="mo-item"><span class="mo-icon">⬡</span>
-            <span>Synthesis: Assessment &nbsp;·&nbsp; Classification &nbsp;·&nbsp; Risk Level &nbsp;·&nbsp; Suggestions &nbsp;·&nbsp; Actions</span></div>
+      <div class="methods-col-body">
+        <div class="section-body">A model-agnostic LLM iteratively processes patients' test reports to
+          extract data points for key clinical metrics, plot trends and create a summary. Prompts include
+          guardrails to avoid hallucinations. Best-practice recommendations are codified and dynamically
+          presented via a personalised rule-based look-up.</div>
+        <div class="methods-output">
+          <div class="methods-output-label">System outputs (per report modality)</div>
+          <div class="methods-output-grid">
+            <div class="mo-item"><span class="mo-icon">⬡</span>
+              <span>Tabular extraction of numerical <em>and</em> non-numerical trends</span></div>
+            <div class="mo-item"><span class="mo-icon">⬡</span>
+              <span>Synthesis: Assessment &nbsp;·&nbsp; Classification &nbsp;·&nbsp; Risk Level &nbsp;·&nbsp; Suggestions &nbsp;·&nbsp; Actions</span></div>
+          </div>
         </div>
       </div>
-      <div class="flow">
-        <div class="flow-box">Reports<span>per patient</span></div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-box highlight">LLM<span>Analyser</span></div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-box">Plots &amp;<br>Summaries</div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-box">Clinical<br>Review</div>
+      <div class="methods-col-diagram">
+        <div class="flow">
+          <div class="flow-box">Reports<span>per patient</span></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box highlight">LLM<span>Analyser</span></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">Plots &amp;<br>Summaries</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">Clinical<br>Review</div>
+        </div>
       </div>
     </div>
   </div>
