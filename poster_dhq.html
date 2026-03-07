@@ -12,27 +12,27 @@
     --muted:#444;--border:#ccd8e0;--white:#fff;--bg:#f4f6f8;
   }
   html,body{width:100%;height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:#1e1e1e}
-  .poster{width:1189px;min-height:841px;margin:30px auto;background:var(--white);
+  .poster{width:1189px;height:841px;margin:30px auto;background:var(--white);
     box-shadow:0 8px 40px rgba(0,0,0,.18);display:flex;flex-direction:column;
     font-size:13px;line-height:1.55}
   /* header */
-  .poster-header{padding:18px 28px 14px;border-bottom:4px solid var(--navy);
+  .poster-header{padding:9px 24px 7px;border-bottom:4px solid var(--navy);
     display:flex;align-items:center;gap:20px}
   .symposium-tag{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
     color:var(--muted);white-space:nowrap;line-height:1.5;flex-shrink:0}
   .header-main{flex:1;text-align:center}
-  .poster-title{font-family:'Source Serif 4',serif;font-size:25px;font-weight:600;
-    color:var(--navy);line-height:1.2;margin-bottom:4px}
-  .poster-subtitle{font-family:'Source Serif 4',serif;font-size:14px;font-weight:400;
-    font-style:italic;color:var(--teal);margin-bottom:5px}
-  .poster-authors{font-size:13px;color:var(--muted)}
+  .poster-title{font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;
+    color:var(--navy);line-height:1.2;margin-bottom:2px}
+  .poster-subtitle{font-family:'Source Serif 4',serif;font-size:13px;font-weight:400;
+    font-style:italic;color:var(--teal);margin-bottom:3px}
+  .poster-authors{font-size:12px;color:var(--muted)}
   .logo-box{display:flex;align-items:center;gap:8px;flex-shrink:0}
-  .logo-box img{height:46px;width:auto}
+  .logo-box img{height:38px;width:auto}
   /* top row */
   .top-row{display:grid;grid-template-columns:1fr 2fr;border-bottom:2px solid var(--border);flex-shrink:0}
-  .top-col{padding:16px 20px;border-right:1px solid var(--border)}
+  .top-col{padding:7px 16px;border-right:1px solid var(--border)}
   .top-col:last-child{border-right:none}
-  .top-col-divider{border-top:1px solid var(--border);margin-top:13px;padding-top:13px}
+  .top-col-divider{border-top:1px solid var(--border);margin-top:6px;padding-top:6px}
   /* Methods column — vertically centre the diagram in remaining space */
   .methods-col{display:flex;flex-direction:column}
   .methods-col-body{flex:0 0 auto}
@@ -40,19 +40,20 @@
   .methods-diagram{flex:0 0 auto;display:flex;justify-content:center}
   .methods-diagram .flow{margin-top:0}
   /* bottom row */
-  .bottom-row{display:grid;grid-template-columns:1fr 295px;flex:1;min-height:0}
-  .hero-panel{padding:14px 0 14px 14px;border-right:1px solid var(--border);
+  .bottom-row{display:grid;grid-template-columns:1fr 320px;flex:1;min-height:0;overflow:hidden}
+  .hero-panel{padding:10px 0 10px 10px;border-right:1px solid var(--border);
     background:var(--bg);display:flex;flex-direction:column;min-height:0}
-  .right-panel{padding:16px 18px;display:flex;flex-direction:column;gap:0}
+  .right-panel{padding:9px 14px;display:flex;flex-direction:column;gap:0;min-height:0;overflow:hidden}
   /* section headers */
   .section-header{background:var(--navy);color:var(--white);font-weight:600;font-size:11.5px;
     letter-spacing:.07em;text-align:center;padding:5px 12px;border-radius:3px;
-    margin-bottom:8px;text-transform:uppercase}
+    margin-bottom:6px;text-transform:uppercase}
   .section-header.teal{background:var(--teal)}
   .section-header.gold{background:var(--gold);color:var(--navy)}
-  .section-body{color:var(--muted);font-size:12px;line-height:1.6}
-  .right-section{flex:1;display:flex;flex-direction:column;justify-content:center}
-  .right-section+.right-section{border-top:1px solid var(--border);padding-top:12px;margin-top:12px}
+  .section-body{color:var(--muted);font-size:12px;line-height:1.5}
+  .right-panel .section-body{font-size:11px;line-height:1.4}
+  .right-section{flex:1;display:flex;flex-direction:column;min-height:0}
+  .right-section+.right-section{border-top:1px solid var(--border);padding-top:6px;margin-top:6px}
   /* flow */
   .flow{display:flex;align-items:stretch;justify-content:center;gap:0;margin-top:12px}
   .flow-box{background:var(--white);border:2px solid var(--teal);border-radius:5px;
@@ -104,10 +105,18 @@
   .coord-active #coord-tip{display:block}
   .coord-active .screenshots{cursor:crosshair}
   ul.poster-list{padding-left:15px;margin-top:2px}
-  ul.poster-list li{margin-bottom:5px;font-size:12px;color:var(--muted);line-height:1.5}
+  ul.poster-list li{margin-bottom:3px;font-size:12px;color:var(--muted);line-height:1.45}
   .poster-footer{border-top:3px solid var(--navy);background:var(--navy);
-    color:rgba(255,255,255,.6);font-size:10px;padding:7px 28px;
+    color:rgba(255,255,255,.6);font-size:10px;padding:6px 22px;
     display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+  /* future work strip */
+  .future-strip{display:flex;align-items:center;gap:18px;border-top:2px solid var(--border);
+    padding:7px 18px;flex-shrink:0;background:var(--white)}
+  .future-strip .section-header{flex-shrink:0;margin-bottom:0;font-size:10.5px}
+  .future-strip-items{flex:1;display:flex;gap:0}
+  .future-strip-item{flex:1;font-size:11px;line-height:1.4;color:var(--muted);
+    border-left:2px solid var(--border);padding:0 14px}
+  .future-strip-item:first-child{border-left:none;padding-left:0}
   @media print{
     @page{size:118.9cm 84.1cm;margin:0}
     html,body{background:white;width:118.9cm;height:84.1cm}
@@ -186,11 +195,10 @@
     <div class="right-panel">
       <div class="right-section">
         <div class="section-header teal">Results</div>
-        <div class="section-body">A prototype was developed and tested on pre-operative scenarios.
-          In one example, the patient's insulin use automatically triggered targeted follow-up
-          questions about diabetes management, functional capacity, and hypoglycaemic episodes —
-          questions a static form would not have asked. An experienced clinician reviewed the agent
-          dialogues and validated the clinical relevance and appropriateness of the questions asked.</div>
+        <div class="section-body">A prototype was tested on pre-operative scenarios.
+          In one example, a patient's insulin use triggered targeted follow-up questions on diabetes
+          management and hypoglycaemia — questions a static form would have missed.
+          An experienced clinician validated the clinical relevance of the questions asked.</div>
       </div>
       <div class="right-section">
         <div class="section-header">Conclusions</div>
@@ -199,14 +207,14 @@
           targeted questions while suppressing irrelevant ones. This suggests potential to improve
           both history completeness and patient experience.</div>
       </div>
-      <div class="right-section">
-        <div class="section-header gold">Future Work</div>
-        <ul class="poster-list">
-          <li>Prospective clinical trial to measure history quality vs. standard questionnaires</li>
-          <li>Multi-language support evaluation</li>
-          <li>Integration with hospital pre-admission and EMR systems</li>
-        </ul>
-      </div>
+    </div>
+  </div>
+  <div class="future-strip">
+    <div class="section-header gold">Future Work</div>
+    <div class="future-strip-items">
+      <div class="future-strip-item">Prospective clinical trial to measure history quality vs. standard questionnaires</div>
+      <div class="future-strip-item">Multi-language support evaluation</div>
+      <div class="future-strip-item">Integration with hospital pre-admission and EMR systems</div>
     </div>
   </div>
   <div class="poster-footer">
