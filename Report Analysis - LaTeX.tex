@@ -1,0 +1,254 @@
+\documentclass[final]{beamer}
+\usepackage[orientation=landscape,size=a0,scale=1.4]{beamerposter}
+
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{ragged2e}
+\usepackage{microtype}
+
+%──────────────────────────────────────────────────────────────────────────────
+% Colours  (Atidia brand palette)
+%──────────────────────────────────────────────────────────────────────────────
+\definecolor{colNavy}{RGB}{27,  42,  74}   % dark navy  — headline / footline
+\definecolor{colTeal}{RGB}{27,  94, 122}   % dark teal  — section headers
+\definecolor{colIce} {RGB}{242,247,250}    % ice blue   — TikZ node fill
+
+%──────────────────────────────────────────────────────────────────────────────
+% Beamer colour assignments
+%──────────────────────────────────────────────────────────────────────────────
+\setbeamercolor{headline}   {fg=white, bg=colNavy}
+\setbeamercolor{footline}   {fg=white, bg=colNavy}
+\setbeamercolor{block title}{fg=white, bg=colTeal}
+\setbeamercolor{block body} {fg=black, bg=white}
+
+\setbeamerfont{block title}{size=\large,  series=\bfseries}
+\setbeamerfont{block body} {size=\normalsize}
+
+\setbeamertemplate{navigation symbols}{}
+
+%──────────────────────────────────────────────────────────────────────────────
+% Block template
+%──────────────────────────────────────────────────────────────────────────────
+\setbeamertemplate{block begin}{%
+  \vskip0.7cm%
+  \begin{beamercolorbox}[wd=\linewidth,
+      leftskip=0.6cm, rightskip=0.6cm, sep=0.3cm]{block title}%
+    \usebeamerfont{block title}\insertblocktitle%
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=\linewidth,
+      leftskip=0.6cm, rightskip=0.6cm, sep=0.5cm, vmode]{block body}%
+    \usebeamerfont{block body}\justifying%
+}
+\setbeamertemplate{block end}{%
+  \end{beamercolorbox}%
+  \vskip0.15cm%
+}
+
+%──────────────────────────────────────────────────────────────────────────────
+% Headline
+%──────────────────────────────────────────────────────────────────────────────
+\setbeamertemplate{headline}{%
+  \begin{beamercolorbox}[wd=\paperwidth]{headline}%
+    \vskip1.4cm%
+    \begin{columns}[c, totalwidth=\paperwidth]%
+      \begin{column}{0.14\paperwidth}%
+        \centering%
+        {\footnotesize\color{white!75!colNavy}
+          2026 Queensland AI\\[2pt]in Healthcare\\[2pt]Symposium}%
+      \end{column}%
+      \begin{column}{0.64\paperwidth}%
+        \centering%
+        {\bfseries\huge\color{white}
+          Reducing Cognitive Load in Clinical Decision-Making\\[7pt]
+          with GenAI-Powered Report Analysis}\\[10pt]
+        {\large\color{white!80!colNavy}
+          \textit{-- a prototype and study proposal}}\\[14pt]
+        {\normalsize\color{white!90!colNavy}
+          Gideon Kowadlo\enspace$\cdot$\enspace
+          Yoel Mittelberg\enspace$\cdot$\enspace
+          Daniel Stiglitz}%
+      \end{column}%
+      \begin{column}{0.18\paperwidth}%
+        \centering%
+        \includegraphics[width=0.14\paperwidth]{atidia_logo.jpg}%
+      \end{column}%
+    \end{columns}%
+    \vskip1.4cm%
+  \end{beamercolorbox}%
+  \vskip0.4cm%
+}
+
+%──────────────────────────────────────────────────────────────────────────────
+% Footline
+%──────────────────────────────────────────────────────────────────────────────
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}[wd=\paperwidth]{footline}%
+    \vskip0.45cm%
+    \hspace{2cm}%
+    Atidia\,\textbullet\,atidia.health%
+    \hfill%
+    2026 Queensland AI in Healthcare Symposium%
+    \hfill%
+    Contact: gideon@atidia.health%
+    \hspace{2cm}%
+    \vskip0.45cm%
+  \end{beamercolorbox}%
+}
+
+%──────────────────────────────────────────────────────────────────────────────
+\begin{document}
+\begin{frame}[t]{}
+
+%
+%  Layout:
+%
+%  ┌─────────────────────────────────────┬───────────────┐
+%  │  [BACKGROUND]        [AIMS]         │               │
+%  ├─────────────────────────────────────┤  Right column │
+%  │                                     │               │
+%  │   Screenshot 1 (summary + charts)   │  METHODS      │
+%  │                                     │  (pipeline)   │
+%  │   Screenshot 2 (results table)      │  RESULTS      │
+%  │                                     │  CONCLUSIONS  │
+%  │                                     │  FUTURE WORK  │
+%  └─────────────────────────────────────┴───────────────┘
+%
+
+\begin{columns}[T, totalwidth=\textwidth]
+
+  %────────────────────────────────────────────────────────────────────────────
+  % LEFT + CENTRE  (~65%)
+  %────────────────────────────────────────────────────────────────────────────
+  \begin{column}{0.648\textwidth}
+
+    %── Top row: Background | Aims ─────────────────────────────────────────
+    \begin{columns}[T, totalwidth=\linewidth]
+
+      \begin{column}{0.495\linewidth}
+        \begin{block}{BACKGROUND}
+          Clinicians managing complex patients must manually navigate multiple
+          longitudinal test reports. It is a cognitively demanding process
+          that makes it difficult to identify trends and synthesise findings
+          at the point of care. The burden of integrating these findings can
+          lead to missed insights and suboptimal clinical decisions.
+        \end{block}
+      \end{column}
+
+      \begin{column}{0.010\linewidth}\end{column}
+
+      \begin{column}{0.495\linewidth}
+        \begin{block}{AIMS}
+          To develop a system that automatically extracts, summarises, and
+          visualises trends from longitudinal patient test reports (structured
+          and unstructured data), and surfaces personalised best-practice
+          clinical recommendations.
+        \end{block}
+      \end{column}
+
+    \end{columns}
+
+    %── Screenshot area ─────────────────────────────────────────────────────
+    \vskip0.5cm
+
+    % Caption bar — screenshot 1
+    \begin{beamercolorbox}[wd=\linewidth,
+        leftskip=0.6cm, rightskip=0.6cm, sep=0.22cm]{block title}
+      \small\bfseries Report Summary \& Trend Visualisation
+    \end{beamercolorbox}
+    \vskip0.1cm
+    \centering
+    % height=0.440·\textheight ⟹ width ≈ 87% of column — nearly full-bleed
+    \includegraphics[height=0.440\textheight, keepaspectratio]{screenshot_charts.jpg}
+
+    \vskip0.45cm
+
+    % Caption bar — screenshot 2
+    \begin{beamercolorbox}[wd=\linewidth,
+        leftskip=0.6cm, rightskip=0.6cm, sep=0.22cm]{block title}
+      \small\bfseries Structured Longitudinal Results Table
+    \end{beamercolorbox}
+    \vskip0.1cm
+    \includegraphics[height=0.330\textheight, keepaspectratio]{screenshot_table.jpg}
+
+  \end{column}
+
+  %── Spacer ──────────────────────────────────────────────────────────────────
+  \begin{column}{0.012\textwidth}\end{column}
+
+  %────────────────────────────────────────────────────────────────────────────
+  % RIGHT COLUMN  (~34%)  — minipage[s] makes \vfill actually stretch
+  %────────────────────────────────────────────────────────────────────────────
+  \begin{column}{0.334\textwidth}
+  \begin{minipage}[t][0.97\textheight][s]{\linewidth}
+
+    \begin{block}{METHODS}
+      The system uses a model-agnostic LLM to iteratively process patients'
+      test reports, extract data points for key clinical metrics, plot trends
+      and create a summary. The prompt specified instructions to parse
+      reports, expected metrics and guardrails to avoid hallucinations.
+      Best-practice recommendations were codified and dynamically presented
+      to the user through a rule-based look-up mechanism, personalised for
+      the patient. The system was tested on respiratory function tests and
+      echocardiograms.
+
+      \vskip0.7cm
+      \centering
+      \begin{tikzpicture}[
+          node distance = 0.5cm,
+          box/.style = {
+            rectangle, rounded corners = 5pt,
+            draw = colTeal, fill = colIce, line width = 1.5pt,
+            text width = 0.72\linewidth, align = center,
+            minimum height = 1.4cm, font = \small\bfseries
+          },
+          arr/.style = {-{Stealth[scale=1.2]}, thick, color=colTeal}
+        ]
+        \node[box] (A) {Reports (per patient)};
+        \node[box, below=0.5cm of A] (B) {Report Analyser (LLM)};
+        \node[box, below=0.5cm of B] (C) {Plots / Summaries / Advice};
+        \node[box, below=0.5cm of C] (D) {Clinical Review};
+        \draw[arr] (A) -- (B);
+        \draw[arr] (B) -- (C);
+        \draw[arr] (C) -- (D);
+      \end{tikzpicture}
+    \end{block}
+
+    \vfill
+
+    \begin{block}{RESULTS}
+      The system analysed reports, extracted key information, presented
+      trends over time in plot and table formats, provided text-based
+      summaries and gave best-practice clinical recommendations. Results
+      were reviewed by an experienced anaesthetist and found to be accurate.
+    \end{block}
+
+    \vfill
+
+    \begin{block}{CONCLUSIONS}
+      This proof-of-concept demonstrates that a GenAI-based system can
+      accurately synthesise longitudinal patient reports, visualise results
+      and surface personalised best-practice recommendations, significantly
+      reducing clinician cognitive load. A prospective clinical trial is
+      warranted.
+    \end{block}
+
+    \vfill
+
+    \begin{block}{FUTURE WORK}
+      \begin{itemize}[leftmargin=1.3em, itemsep=5pt, topsep=3pt]
+        \item RAG-based dynamic best-practice guideline lookup
+        \item Clinician chat interface for interactive report discussion
+        \item Prospective clinical trial evaluation
+      \end{itemize}
+    \end{block}
+
+  \end{minipage}
+  \end{column}
+
+\end{columns}
+
+\end{frame}
+\end{document}

@@ -1,0 +1,9 @@
+Agentic health questionnaires – a prototype and study proposal (poster submitted to Metro South AI in Healthcare Symposium)
+
+Gideon Kowadlo12, Yoel Mittelberg1, Daniel Stiglitz13
+
+Introduction: An accurate patient history is essential to deliver high quality care. The standard approach, online or paper forms, faces a difficult tradeoff: the longer the questionnaire, the more comprehensive, but lower adherence and accuracy.
+Aims: Obtain high quality patient history by a) asking fewer questions, b) asking more targeted and relevant questions
+Methods: An AI agent was developed to dynamically present a personalised questionnaire to the patient. It iteratively determines what questions to ask based on patient profile and previous responses. The system consists of two interacting LLMs with specialised roles: the 'reviewer' assesses the current history and identifies gaps in surgery readiness, while the 'selector' chooses the next questions from a predefined, clinically validated set; avoiding hallucinated irrelevant questions. The system is designed to be model-agnostic, with the LLM component interchangeable across commercially available foundation models.
+Results: A prototype was developed that asked targeted questions based on factors such as medications. For example, given insulin, the system asked further questions about diabetes. An experienced clinician reviewed the conversations and validated the relevance of the questions.
+Conclusions and Relevance: This proof-of-concept demonstrates that a dual-agent GenAI system can dynamically tailor health questionnaires based on patient responses. The ability to ask targeted, contextually relevant questions suggests potential to improve both patient experience and history quality, motivating a prospective clinical trial to quantify these benefits.

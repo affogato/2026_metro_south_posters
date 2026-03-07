@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reducing Cognitive Load in Clinical Decision-Making with GenAI-Powered Report Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1a2f4e;
+    --teal: #2a7fa5;
+    --teal-light: #e8f4f9;
+    --gold: #e8a020;
+    --text: #1e1e1e;
+    --muted: #444;
+    --border: #ccd8e0;
+    --white: #ffffff;
+    --bg: #f4f6f8;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  /* ── POSTER SHELL ── */
+  .poster {
+    width: 1189px; /* A0 landscape ratio approximation at screen scale */
+    min-height: 841px;
+    margin: 30px auto;
+    background: var(--white);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  /* ── HEADER ── */
+  .poster-header {
+    padding: 18px 28px 14px;
+    border-bottom: 4px solid var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .symposium-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    line-height: 1.5;
+    flex-shrink: 0;
+  }
+  .header-main {
+    flex: 1;
+    text-align: center;
+  }
+  .poster-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .poster-authors {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .logo-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .logo-flame {
+    width: 36px;
+    height: 36px;
+  }
+  .logo-name {
+    font-family: 'Source Serif 4', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  /* ── TOP ROW ── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 2px solid var(--border);
+    flex-shrink: 0;
+  }
+  .top-col {
+    padding: 18px 20px;
+    border-right: 1px solid var(--border);
+  }
+  .top-col:last-child { border-right: none; }
+
+  /* ── BOTTOM ROW ── */
+  .bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    flex: 1;
+  }
+  .hero-panel {
+    padding: 18px 20px;
+    border-right: 1px solid var(--border);
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .right-panel {
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-header {
+    background: var(--navy);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.07em;
+    text-align: center;
+    padding: 6px 12px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .section-header.teal  { background: var(--teal); }
+  .section-header.gold  { background: var(--gold); color: var(--navy); }
+
+  .section-body {
+    color: var(--muted);
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-top: 14px;
+  }
+  .flow-box {
+    background: var(--white);
+    border: 2px solid var(--teal);
+    border-radius: 5px;
+    padding: 7px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--navy);
+    text-align: center;
+    line-height: 1.3;
+  }
+  .flow-box span {
+    display: block;
+    font-weight: 400;
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .flow-box.highlight {
+    background: var(--teal);
+    color: var(--white);
+  }
+  .flow-box.highlight span { color: rgba(255,255,255,0.8); }
+  .flow-arrow {
+    color: var(--teal);
+    font-size: 20px;
+    padding: 0 6px;
+    font-weight: 300;
+  }
+
+  /* ── SCREENSHOT CONTAINER ── */
+  .screenshot-container {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .screenshot-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+  }
+  /* Placeholder shown when no image is loaded */
+  .screenshot-placeholder {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eef2f5;
+    color: #aab4be;
+    font-size: 13px;
+    font-style: italic;
+    padding: 20px;
+    text-align: center;
+    min-height: 320px;
+  }
+
+  /* ── ANNOTATION CALLOUTS ── */
+  .callout-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .callout-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--teal-light);
+    border: 1px solid var(--teal);
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--navy);
+    font-weight: 500;
+  }
+  .callout-dot {
+    width: 8px; height: 8px;
+    background: var(--teal);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── BULLET LIST ── */
+  ul.poster-list {
+    padding-left: 16px;
+    margin-top: 2px;
+  }
+  ul.poster-list li {
+    margin-bottom: 6px;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── FOOTER ── */
+  .poster-footer {
+    border-top: 3px solid var(--navy);
+    background: var(--navy);
+    color: rgba(255,255,255,0.6);
+    font-size: 10px;
+    padding: 8px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .poster-footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="poster">
+
+  <!-- ══ HEADER ══ -->
+  <div class="poster-header">
+    <div class="symposium-tag">
+      2026 Queensland<br>AI in Healthcare<br>Symposium
+    </div>
+
+    <div class="header-main">
+      <div class="poster-title">
+        Reducing Cognitive Load in Clinical Decision-Making<br>
+        with GenAI-Powered Report Analysis
+      </div>
+      <div class="poster-authors">Gideon Kowadlo &nbsp;·&nbsp; Yoel Mittelberg &nbsp;·&nbsp; Daniel Stiglitz</div>
+    </div>
+
+    <!-- Replace the SVG below with your actual Atidia logo if you have an <img> -->
+    <div class="logo-box">
+      <svg class="logo-flame" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 3 C20 3 30 12 30 22 C30 30 24 36 20 36 C16 36 10 30 10 22 C10 12 20 3 20 3Z" fill="url(#flameGrad)"/>
+        <path d="M20 16 C20 16 25 21 25 26 C25 30 22.5 33 20 33 C17.5 33 15 30 15 26 C15 21 20 16 20 16Z" fill="url(#innerFlame)"/>
+        <defs>
+          <linearGradient id="flameGrad" x1="10" y1="36" x2="30" y2="3" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#e8502a"/>
+            <stop offset="100%" stop-color="#f5c842"/>
+          </linearGradient>
+          <linearGradient id="innerFlame" x1="15" y1="33" x2="25" y2="16" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#fff" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#fff" stop-opacity="0.1"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="logo-name">Atidia</div>
+    </div>
+  </div>
+
+  <!-- ══ TOP ROW ══ -->
+  <div class="top-row">
+
+    <!-- Background -->
+    <div class="top-col">
+      <div class="section-header">Background</div>
+      <div class="section-body">
+        Clinicians managing complex patients must manually navigate multiple longitudinal test reports — a cognitively demanding process that makes it difficult to identify trends and synthesise findings at the point of care. Over time, patients accumulate results across many modalities, and the burden of integrating these findings can lead to missed insights and suboptimal clinical decisions.
+      </div>
+    </div>
+
+    <!-- Aims -->
+    <div class="top-col">
+      <div class="section-header teal">Aims</div>
+      <div class="section-body">
+        To develop a GenAI-based system that automatically extracts, summarises, and visualises trends from patient test reports, and surfaces personalised best-practice clinical recommendations — evaluated here on respiratory function tests and echocardiograms.
+      </div>
+    </div>
+
+    <!-- Methods -->
+    <div class="top-col">
+      <div class="section-header">Methods</div>
+      <div class="section-body">
+        A model-agnostic LLM iteratively processes patients' test reports to extract key clinical metrics, plot trends, and generate summaries. Prompts include guardrails to avoid hallucinations. Best-practice recommendations are codified and dynamically presented via a rule-based look-up mechanism.
+      </div>
+      <div class="flow">
+        <div class="flow-box">Reports<span>per patient</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box highlight">LLM<span>Analyser</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Plots &amp;<br>Summaries</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Clinical<br>Review</div>
+      </div>
+    </div>
+
+  </div><!-- /top-row -->
+
+  <!-- ══ BOTTOM ROW ══ -->
+  <div class="bottom-row">
+
+    <!-- Hero screenshot panel -->
+    <div class="hero-panel">
+
+      <div class="screenshot-container">
+        <!--
+          INSTRUCTIONS: Replace the placeholder below with your actual screenshot.
+          Option A — paste a file path:
+            <img src="your-screenshot.png" alt="System interface screenshot">
+          Option B — keep the placeholder text and drop your image in later.
+        -->
+        <div class="screenshot-placeholder">
+          [ Paste your system screenshot here ]<br><br>
+          Replace this div with:<br>
+          <code>&lt;img src="screenshot.png" alt="System interface"&gt;</code>
+        </div>
+      </div>
+
+      <!-- Callout legend -->
+      <div class="callout-row">
+        <div class="callout-chip"><div class="callout-dot"></div>Automated summary</div>
+        <div class="callout-chip"><div class="callout-dot"></div>Trends from lung function tests</div>
+        <div class="callout-chip"><div class="callout-dot"></div>Trends from echocardiograms</div>
+        <div class="callout-chip"><div class="callout-dot"></div>Tabular data &amp; synthesis</div>
+        <div class="callout-chip"><div class="callout-dot"></div>Best-practice advice</div>
+        <div class="callout-chip"><div class="callout-dot"></div>Download original report</div>
+      </div>
+
+    </div>
+
+    <!-- Right panel -->
+    <div class="right-panel">
+
+      <div>
+        <div class="section-header teal">Results</div>
+        <div class="section-body">
+          The system analysed reports, extracted key information, and presented trends in plot and table formats. Text-based summaries and best-practice clinical recommendations were generated and reviewed by an experienced anaesthetist, who found results to be accurate.
+        </div>
+      </div>
+
+      <div>
+        <div class="section-header">Conclusions</div>
+        <div class="section-body">
+          This proof-of-concept demonstrates that a GenAI-based system can accurately synthesise longitudinal patient reports and surface personalised best-practice recommendations, significantly reducing clinician cognitive load. Results support proceeding to a prospective clinical trial.
+        </div>
+      </div>
+
+      <div>
+        <div class="section-header gold">Future Work</div>
+        <ul class="poster-list">
+          <li>RAG-based dynamic best-practice guideline lookup</li>
+          <li>Clinician chat interface for interactive report discussion</li>
+          <li>Prospective clinical trial evaluation</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div><!-- /bottom-row -->
+
+  <!-- ══ FOOTER ══ -->
+  <div class="poster-footer">
+    <span>Atidia &nbsp;·&nbsp; atidia.com.au</span>
+    <span>2026 Queensland AI in Healthcare Symposium</span>
+    <span>Contact: gideon@atidia.com.au</span>
+  </div>
+
+</div><!-- /poster -->
+
+</body>
+</html>

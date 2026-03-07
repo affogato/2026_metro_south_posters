@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Callout Style Options</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #1a2f4e;
+    --teal: #2a7fa5;
+    --gold: #e8a020;
+    --sage: #2e7d5e;
+    --plum: #6c3483;
+    --rust: #c0392b;
+    --muted: #555;
+    --border: #ccd8e0;
+    --bg: #f0f2f5;
+  }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    padding: 40px;
+    color: var(--navy);
+  }
+  h1 { font-size: 18px; margin-bottom: 8px; color: var(--navy); }
+  p.intro { font-size: 13px; color: var(--muted); margin-bottom: 36px; }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+    overflow: hidden;
+  }
+  .card-title {
+    background: var(--navy);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 18px;
+  }
+  .card-body {
+    padding: 20px;
+  }
+  /* Fake screenshot placeholder */
+  .fake-screen {
+    background: #e8ecf0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    position: relative;
+    overflow: visible;
+  }
+  .fake-screen-inner {
+    padding: 14px 16px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .fake-line { background: #c5cdd6; border-radius: 3px; height: 9px; }
+  .fake-line.short { width: 55%; }
+  .fake-line.med   { width: 75%; }
+  .fake-line.long  { width: 90%; }
+  .fake-line.tiny  { width: 35%; height: 7px; background: #d8dfe6; }
+  .fake-box {
+    border: 1px solid var(--border);
+    background: white;
+    border-radius: 4px;
+    padding: 8px 10px;
+    margin-top: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  /* ════════════════════════════════
+     STYLE A — Hairline + plain text
+  ════════════════════════════════ */
+  .style-a .demo {
+    display: grid;
+    grid-template-columns: 130px 1fr 130px;
+    gap: 0;
+    align-items: stretch;
+    min-height: 180px;
+  }
+  .style-a .callout-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 16px 0;
+  }
+  .style-a .callout-col.left { align-items: flex-end; }
+  .style-a .callout-col.right { align-items: flex-start; }
+  .style-a .callout-item {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .style-a .callout-col.left .callout-item { flex-direction: row; }
+  .style-a .callout-col.right .callout-item { flex-direction: row-reverse; }
+  .style-a .callout-text {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--navy);
+    text-align: right;
+    line-height: 1.3;
+    max-width: 88px;
+  }
+  .style-a .callout-col.right .callout-text { text-align: left; }
+  .style-a .hairline {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .style-a .callout-col.left  .hairline { flex-direction: row; }
+  .style-a .callout-col.right .hairline { flex-direction: row-reverse; }
+  .style-a .line-shaft {
+    width: 18px;
+    height: 1px;
+    background: var(--teal);
+  }
+  .style-a .arrow-r {
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 5px solid var(--teal);
+  }
+  .style-a .arrow-l {
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-right: 5px solid var(--teal);
+  }
+  /* colour variants for hairline style */
+  .style-a .c-teal .callout-text  { color: var(--teal); }
+  .style-a .c-teal .line-shaft    { background: var(--teal); }
+  .style-a .c-teal .arrow-r       { border-left-color: var(--teal); }
+  .style-a .c-teal .arrow-l       { border-right-color: var(--teal); }
+  .style-a .c-gold .callout-text  { color: var(--gold); }
+  .style-a .c-gold .line-shaft    { background: var(--gold); }
+  .style-a .c-gold .arrow-r       { border-left-color: var(--gold); }
+  .style-a .c-gold .arrow-l       { border-right-color: var(--gold); }
+  .style-a .c-sage .callout-text  { color: var(--sage); }
+  .style-a .c-sage .line-shaft    { background: var(--sage); }
+  .style-a .c-sage .arrow-r       { border-left-color: var(--sage); }
+  .style-a .c-sage .arrow-l       { border-right-color: var(--sage); }
+  .style-a .c-plum .callout-text  { color: var(--plum); }
+  .style-a .c-plum .line-shaft    { background: var(--plum); }
+  .style-a .c-plum .arrow-r       { border-left-color: var(--plum); }
+  .style-a .c-plum .arrow-l       { border-right-color: var(--plum); }
+  .style-a .c-rust .callout-text  { color: var(--rust); }
+  .style-a .c-rust .line-shaft    { background: var(--rust); }
+  .style-a .c-rust .arrow-r       { border-left-color: var(--rust); }
+  .style-a .c-rust .arrow-l       { border-right-color: var(--rust); }
+
+  /* ════════════════════════════════
+     STYLE B — Dot on stem
+  ════════════════════════════════ */
+  .style-b .demo {
+    display: grid;
+    grid-template-columns: 130px 1fr 130px;
+    gap: 0;
+    align-items: stretch;
+    min-height: 180px;
+  }
+  .style-b .callout-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 16px 0;
+  }
+  .style-b .callout-col.left  { align-items: flex-end; }
+  .style-b .callout-col.right { align-items: flex-start; }
+  .style-b .callout-item {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .style-b .callout-col.left .callout-item  { flex-direction: row; }
+  .style-b .callout-col.right .callout-item { flex-direction: row-reverse; }
+  .style-b .dot-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.3;
+    max-width: 82px;
+    text-align: right;
+  }
+  .style-b .callout-col.right .dot-label { text-align: left; }
+  .style-b .stem {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .style-b .callout-col.left .stem  { flex-direction: row; }
+  .style-b .callout-col.right .stem { flex-direction: row-reverse; }
+  .style-b .stem-line {
+    width: 14px;
+    height: 1.5px;
+    background: currentColor;
+  }
+  .style-b .stem-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+  /* Colour application */
+  .style-b .c-teal  { color: var(--teal);  }
+  .style-b .c-gold  { color: var(--gold);  }
+  .style-b .c-sage  { color: var(--sage);  }
+  .style-b .c-plum  { color: var(--plum);  }
+  .style-b .c-rust  { color: var(--rust);  }
+  .style-b .c-teal .dot-label  { color: var(--teal); }
+  .style-b .c-gold .dot-label  { color: #b07010; }
+  .style-b .c-sage .dot-label  { color: var(--sage); }
+  .style-b .c-plum .dot-label  { color: var(--plum); }
+  .style-b .c-rust .dot-label  { color: var(--rust); }
+
+  /* ════════════════════════════════
+     STYLE C — Angled leader line (SVG)
+  ════════════════════════════════ */
+  .style-c .demo {
+    position: relative;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .style-c .fake-screen {
+    width: 60%;
+    position: relative;
+    z-index: 1;
+  }
+  .style-c svg.leaders {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: visible;
+    z-index: 0;
+  }
+  .style-c .leader-label {
+    position: absolute;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: right;
+  }
+  .style-c .leader-label.right-side { text-align: left; }
+
+  /* ════════════════════════════════
+     STYLE D — Numbered pins
+  ════════════════════════════════ */
+  .style-d .demo {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .style-d .screen-wrap {
+    position: relative;
+  }
+  .style-d .pin {
+    position: absolute;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800;
+    color: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.30);
+    z-index: 2;
+    line-height: 1;
+  }
+  .style-d .legend {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0 4px;
+  }
+  .style-d .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10.5px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .style-d .legend-pin {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 800;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .note {
+    font-size: 11px;
+    color: #888;
+    margin-top: 10px;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<h1>Callout Style Options — visual demo</h1>
+<p class="intro">Each style uses the same 5 labels as the current poster. Grey rectangle = screenshot placeholder.</p>
+
+<div class="grid">
+
+  <!-- ═══ STYLE A ═══ -->
+  <div class="card style-a">
+    <div class="card-title">A — Hairline + coloured text</div>
+    <div class="card-body">
+      <div class="demo">
+        <div class="callout-col left">
+          <div class="callout-item c-navy">
+            <div class="callout-text">Automated clinical summary</div>
+            <div class="hairline"><div class="line-shaft"></div><div class="arrow-r"></div></div>
+          </div>
+          <div class="callout-item c-teal">
+            <div class="callout-text">Tabular data &amp; synthesis</div>
+            <div class="hairline"><div class="line-shaft"></div><div class="arrow-r"></div></div>
+          </div>
+        </div>
+        <div class="fake-screen">
+          <div class="fake-screen-inner">
+            <div class="fake-line long"></div>
+            <div class="fake-line med"></div>
+            <div class="fake-box">
+              <div class="fake-line short"></div>
+              <div class="fake-line med"></div>
+              <div class="fake-line tiny"></div>
+            </div>
+            <div class="fake-line long"></div>
+            <div class="fake-line short"></div>
+            <div class="fake-box">
+              <div class="fake-line med"></div>
+              <div class="fake-line long"></div>
+            </div>
+          </div>
+        </div>
+        <div class="callout-col right">
+          <div class="callout-item c-sage">
+            <div class="hairline"><div class="line-shaft"></div><div class="arrow-l"></div></div>
+            <div class="callout-text">Lung function trends</div>
+          </div>
+          <div class="callout-item c-plum">
+            <div class="hairline"><div class="line-shaft"></div><div class="arrow-l"></div></div>
+            <div class="callout-text">Echocardiogram trends</div>
+          </div>
+          <div class="callout-item c-gold">
+            <div class="hairline"><div class="line-shaft"></div><div class="arrow-l"></div></div>
+            <div class="callout-text">Best-practice advice</div>
+          </div>
+        </div>
+      </div>
+      <p class="note">Lightest option — no background or box at all. Text colour is the only signal.</p>
+    </div>
+  </div>
+
+  <!-- ═══ STYLE B ═══ -->
+  <div class="card style-b">
+    <div class="card-title">B — Coloured dot on stem</div>
+    <div class="card-body">
+      <div class="demo">
+        <div class="callout-col left">
+          <div class="callout-item c-teal">
+            <div class="dot-label">Automated clinical summary</div>
+            <div class="stem"><div class="stem-line"></div><div class="stem-dot"></div></div>
+          </div>
+          <div class="callout-item c-rust">
+            <div class="dot-label">Tabular data &amp; synthesis</div>
+            <div class="stem"><div class="stem-line"></div><div class="stem-dot"></div></div>
+          </div>
+        </div>
+        <div class="fake-screen">
+          <div class="fake-screen-inner">
+            <div class="fake-line long"></div>
+            <div class="fake-line med"></div>
+            <div class="fake-box">
+              <div class="fake-line short"></div>
+              <div class="fake-line med"></div>
+              <div class="fake-line tiny"></div>
+            </div>
+            <div class="fake-line long"></div>
+            <div class="fake-line short"></div>
+            <div class="fake-box">
+              <div class="fake-line med"></div>
+              <div class="fake-line long"></div>
+            </div>
+          </div>
+        </div>
+        <div class="callout-col right">
+          <div class="callout-item c-sage">
+            <div class="stem"><div class="stem-dot"></div><div class="stem-line"></div></div>
+            <div class="dot-label">Lung function trends</div>
+          </div>
+          <div class="callout-item c-plum">
+            <div class="stem"><div class="stem-dot"></div><div class="stem-line"></div></div>
+            <div class="dot-label">Echocardiogram trends</div>
+          </div>
+          <div class="callout-item c-gold">
+            <div class="stem"><div class="stem-dot"></div><div class="stem-line"></div></div>
+            <div class="dot-label">Best-practice advice</div>
+          </div>
+        </div>
+      </div>
+      <p class="note">Used in anatomy diagrams and pharmaceutical posters — the dot sits at the "touch point" on the image.</p>
+    </div>
+  </div>
+
+  <!-- ═══ STYLE C ═══ -->
+  <div class="card style-c">
+    <div class="card-title">C — Angled leader lines</div>
+    <div class="card-body">
+      <div class="demo" style="height:220px;">
+
+        <!-- Left labels -->
+        <div style="position:absolute; left:8px; top:28px; font-size:10px; font-weight:700; color:var(--teal); line-height:1.3; text-align:right; width:90px;">Automated<br>clinical summary</div>
+        <div style="position:absolute; left:8px; top:130px; font-size:10px; font-weight:700; color:var(--rust); line-height:1.3; text-align:right; width:90px;">Tabular data<br>&amp; synthesis</div>
+
+        <!-- Right labels -->
+        <div style="position:absolute; right:8px; top:18px; font-size:10px; font-weight:700; color:var(--sage); line-height:1.3; text-align:left; width:90px;">Lung function<br>trends</div>
+        <div style="position:absolute; right:8px; top:90px; font-size:10px; font-weight:700; color:var(--plum); line-height:1.3; text-align:left; width:90px;">Echocardiogram<br>trends</div>
+        <div style="position:absolute; right:8px; top:158px; font-size:10px; font-weight:700; color:var(--gold); line-height:1.3; text-align:left; width:90px;">Best-practice<br>advice</div>
+
+        <!-- SVG leader lines -->
+        <svg style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:visible;pointer-events:none;">
+          <!-- Left side leaders: text bottom-right corner → angled → horizontal foot → image left edge -->
+          <!-- Automated summary: label ~(99,42) → foot (116,52) → image left (160,52) -->
+          <polyline points="100,42 116,52 158,52" stroke="var(--teal)" stroke-width="1.2" fill="none"/>
+          <circle cx="158" cy="52" r="2.5" fill="var(--teal)"/>
+          <!-- Tabular: label ~(99,148) → foot (116,148) → image left (160,148) -->
+          <polyline points="100,148 116,148 158,148" stroke="var(--rust)" stroke-width="1.2" fill="none"/>
+          <circle cx="158" cy="148" r="2.5" fill="var(--rust)"/>
+
+          <!-- Right side leaders: image right edge → angled → text bottom-left corner -->
+          <!-- Lung: image right (290,36) → foot (304,36) → label left (316,28) -->
+          <polyline points="290,38 305,38 315,28" stroke="var(--sage)" stroke-width="1.2" fill="none"/>
+          <circle cx="290" cy="38" r="2.5" fill="var(--sage)"/>
+          <!-- Echo: image right (290,106) → foot (304,106) → label left (316,98) -->
+          <polyline points="290,106 305,106 315,98" stroke="var(--plum)" stroke-width="1.2" fill="none"/>
+          <circle cx="290" cy="106" r="2.5" fill="var(--plum)"/>
+          <!-- Advice: image right (290,172) → foot (304,172) → label (316,162) -->
+          <polyline points="290,172 305,172 315,162" stroke="var(--gold)" stroke-width="1.2" fill="none"/>
+          <circle cx="290" cy="172" r="2.5" fill="var(--gold)"/>
+        </svg>
+
+        <!-- Screenshot placeholder, centred -->
+        <div class="fake-screen" style="width:130px; margin: 0 auto; align-self:center; position:relative; z-index:1;">
+          <div class="fake-screen-inner" style="min-height:180px;">
+            <div class="fake-line long"></div>
+            <div class="fake-line med"></div>
+            <div class="fake-box">
+              <div class="fake-line short"></div>
+              <div class="fake-line med"></div>
+            </div>
+            <div class="fake-line long"></div>
+            <div class="fake-box">
+              <div class="fake-line med"></div>
+              <div class="fake-line long"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <p class="note">Engineering / editorial style — diagonal line with small terminal dot. Precise and technical-looking.</p>
+    </div>
+  </div>
+
+  <!-- ═══ STYLE D ═══ -->
+  <div class="card style-d">
+    <div class="card-title">D — Numbered pins + legend</div>
+    <div class="card-body">
+      <div class="demo">
+        <div class="screen-wrap">
+          <div class="fake-screen">
+            <div class="fake-screen-inner" style="min-height:140px; position:relative;">
+              <div class="fake-line long"></div>
+              <div class="fake-line med"></div>
+              <div class="fake-box">
+                <div class="fake-line short"></div>
+                <div class="fake-line med"></div>
+              </div>
+              <div class="fake-line long"></div>
+              <div class="fake-box">
+                <div class="fake-line med"></div>
+                <div class="fake-line long"></div>
+              </div>
+            </div>
+            <!-- Pins overlaid -->
+            <div class="pin" style="background:var(--teal);  top:10px;  left:12px;">1</div>
+            <div class="pin" style="background:var(--sage);  top:10px;  right:20px;">2</div>
+            <div class="pin" style="background:var(--plum);  top:60px;  right:20px;">3</div>
+            <div class="pin" style="background:var(--rust);  bottom:18px; left:12px;">4</div>
+            <div class="pin" style="background:var(--gold);  bottom:18px; right:20px;">5</div>
+          </div>
+        </div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-pin" style="background:var(--teal);">1</div> Automated clinical summary</div>
+          <div class="legend-item"><div class="legend-pin" style="background:var(--sage);">2</div> Lung function trends</div>
+          <div class="legend-item"><div class="legend-pin" style="background:var(--plum);">3</div> Echocardiogram trends</div>
+          <div class="legend-item"><div class="legend-pin" style="background:var(--rust);">4</div> Tabular data &amp; synthesis</div>
+          <div class="legend-item"><div class="legend-pin" style="background:var(--gold);">5</div> Best-practice advice</div>
+        </div>
+      </div>
+      <p class="note">Used in app walkthroughs and UX posters — pins sit right on the screenshot, legend reads below.</p>
+    </div>
+  </div>
+
+</div><!-- /grid -->
+</body>
+</html>
