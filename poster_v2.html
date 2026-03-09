@@ -101,16 +101,6 @@
     overflow:visible;pointer-events:none;z-index:4}
   .callout-label{position:absolute;font-size:10px;font-weight:700;line-height:1.35;
     z-index:5;width:110px;max-width:110px;pointer-events:none}
-  /* coordinate helper (screen only) */
-  #coord-btn{position:fixed;bottom:16px;right:16px;z-index:999;
-    background:var(--navy);color:#fff;border:none;border-radius:20px;
-    padding:7px 16px;font-size:11px;font-weight:600;cursor:pointer;
-    font-family:'DM Sans',sans-serif;box-shadow:0 2px 8px rgba(0,0,0,.3)}
-  #coord-tip{display:none;position:absolute;background:rgba(0,0,0,.75);color:#fff;
-    font-size:10px;font-family:monospace;padding:3px 7px;border-radius:4px;
-    pointer-events:none;z-index:999;white-space:nowrap;transform:translate(8px,-50%)}
-  .coord-active #coord-tip{display:block}
-  .coord-active .screenshots{cursor:crosshair}
   ul.poster-list{padding-left:15px;margin-top:2px}
   ul.poster-list li{margin-bottom:3px;font-size:12px;color:var(--muted);line-height:1.45}
   .poster-footer{border-top:3px solid var(--navy);background:var(--navy);
@@ -128,7 +118,6 @@
     @page{size:118.9cm 84.1cm;margin:0}
     html,body{background:white;width:118.9cm;height:84.1cm}
     .poster{width:118.9cm;height:84.1cm;min-height:unset;margin:0;box-shadow:none}
-    #coord-btn{display:none}
   }
 </style>
 </head>
@@ -234,8 +223,6 @@
   </div>
 </div>
 
-<!-- 📍 Coordinate helper button (hidden at print) -->
-<button id="coord-btn">📍 Coord helper</button>
 
 <script>
 /* ╔══════════════════════════════════════════════════════════════════╗
@@ -326,27 +313,6 @@ globalThis.CALLOUTS = {
   cfg.left.forEach(c  => makeLabel(c, 11.5, 'right'));
   cfg.right.forEach(c => makeLabel(c, 88.5, 'left'));
 
-  // ── coordinate helper ─────────────────────────────────────────────────────
-  const btn = document.getElementById('coord-btn');
-  const tip = document.getElementById('coord-tip');
-  let active = false;
-
-  btn.addEventListener('click', () => {
-    active = !active;
-    hi.classList.toggle('coord-active', active);
-    btn.textContent = active ? '✕ Stop coord helper' : '📍 Coord helper';
-  });
-
-  hi.addEventListener('mousemove', e => {
-    if (!active) return;
-    const r = hi.getBoundingClientRect();
-    const xPct = ((e.clientX - r.left) / r.width  * 100).toFixed(1);
-    const yPct = ((e.clientY - r.top)  / r.height * 100).toFixed(1);
-    tip.style.left = (e.clientX - r.left) + 'px';
-    tip.style.top  = (e.clientY - r.top)  + 'px';
-    tip.textContent = xPct + '%, ' + yPct + '%';
-  });
-  hi.addEventListener('mouseleave', () => { tip.textContent = ''; });
 })();
 </script>
 </body>
