@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poster V2 A0 Margin Export</title>
+<style>
+  :root {
+    --a0-width-px: 14043;
+    --a0-height-px: 9933;
+    --poster-width-px: 1189;
+    --poster-height-px: 841;
+    --safe-margin-px: 118;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    width: calc(var(--a0-width-px) * 1px);
+    height: calc(var(--a0-height-px) * 1px);
+    overflow: hidden;
+    background: #fff;
+  }
+
+  body {
+    position: relative;
+  }
+
+  #page {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    overflow: hidden;
+  }
+
+  #poster-frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(var(--poster-width-px) * 1px);
+    height: calc(var(--poster-height-px) * 1px);
+    border: 0;
+    background: #fff;
+    transform-origin: center center;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  #status {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+<div id="page">
+  <iframe
+    id="poster-frame"
+    src="./poster_v2.html"
+    title="Poster V2"
+    loading="eager"
+  ></iframe>
+  <div id="status" aria-live="polite">loading</div>
+</div>
+
+<script>
+  const statusEl = document.getElementById("status");
+  const frameEl = document.getElementById("poster-frame");
+
+  const A0_WIDTH = 14043;
+  const A0_HEIGHT = 9933;
+  const SAFE_MARGIN = 118;
+  const POSTER_WIDTH = 1189;
+  const POSTER_HEIGHT = 841;
+
+  const scale = Math.min(
+    (A0_WIDTH - SAFE_MARGIN * 2) / POSTER_WIDTH,
+    (A0_HEIGHT - SAFE_MARGIN * 2) / POSTER_HEIGHT
+  );
+
+  frameEl.style.transform = `translate(-50%, -50%) scale(${scale})`;
+
+  function waitForImages(doc) {
+    const images = Array.from(doc.images || []);
+    return Promise.all(
+      images.map((img) => {
+        if (img.complete) return Promise.resolve();
+        return new Promise((resolve) => {
+          img.addEventListener("load", resolve, { once: true });
+          img.addEventListener("error", resolve, { once: true });
+        });
+      })
+    );
+  }
+
+  frameEl.addEventListener("load", async () => {
+    const doc = frameEl.contentDocument;
+    const win = frameEl.contentWindow;
+    if (!doc || !win) {
+      statusEl.textContent = "error";
+      return;
+    }
+
+    const html = doc.documentElement;
+    const body = doc.body;
+    const poster = doc.querySelector(".poster");
+
+    html.style.width = `${POSTER_WIDTH}px`;
+    html.style.height = `${POSTER_HEIGHT}px`;
+    html.style.overflow = "hidden";
+    html.style.background = "#fff";
+
+    body.style.width = `${POSTER_WIDTH}px`;
+    body.style.height = `${POSTER_HEIGHT}px`;
+    body.style.margin = "0";
+    body.style.overflow = "hidden";
+    body.style.background = "#fff";
+
+    if (poster) {
+      poster.style.margin = "0";
+      poster.style.boxShadow = "none";
+      poster.style.width = `${POSTER_WIDTH}px`;
+      poster.style.height = `${POSTER_HEIGHT}px`;
+    }
+
+    try {
+      await Promise.allSettled([
+        doc.fonts ? doc.fonts.ready : Promise.resolve(),
+        waitForImages(doc),
+      ]);
+      await new Promise((resolve) => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
+      document.documentElement.dataset.ready = "true";
+      statusEl.textContent = "ready";
+    } catch {
+      statusEl.textContent = "error";
+    }
+  });
+</script>
+</body>
+</html>
