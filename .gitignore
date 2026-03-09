@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# System
+.DS_Store
+
+# Generated Poster Files
+*_final.png
+*_print.png
+*_a0*.png
+*_300dpi_margin.png
+
+# Generated PDFs
+*.pdf
+
+# Intermediate/Logs
+npm-debug.log
