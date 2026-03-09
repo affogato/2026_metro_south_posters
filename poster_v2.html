@@ -16,28 +16,28 @@
     box-shadow:0 8px 40px rgba(0,0,0,.18);display:flex;flex-direction:column;
     font-size:13px;line-height:1.55}
   /* header */
-  .poster-header{padding:9px 24px 7px;border-bottom:4px solid var(--navy);
-    display:flex;align-items:center;gap:20px}
+  .poster-header{padding:7px 18px 6px;border-bottom:4px solid var(--navy);
+    display:flex;align-items:center;gap:16px}
   .symposium-tag{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
     color:var(--muted);white-space:nowrap;line-height:1.5;flex-shrink:0}
   .header-main{flex:1;text-align:center}
-  .poster-title{font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;
-    color:var(--navy);line-height:1.2;margin-bottom:2px}
-  .poster-subtitle{font-family:'Source Serif 4',serif;font-size:13px;font-weight:400;
+  .poster-title{font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;
+    color:var(--navy);line-height:1.15;margin-bottom:2px;white-space:nowrap}
+  .poster-subtitle{font-family:'Source Serif 4',serif;font-size:15px;font-weight:400;
     font-style:italic;color:var(--teal);margin-bottom:3px}
   .poster-authors{font-size:12px;color:var(--muted)}
   .logo-box{display:flex;align-items:center;gap:8px;flex-shrink:0}
-  .logo-box img{height:38px;width:auto}
+  .logo-box img{height:34px;width:auto}
   /* top row */
-  .top-row{display:grid;grid-template-columns:1fr 2fr;border-bottom:2px solid var(--border);flex-shrink:0}
-  .top-col{padding:7px 16px;border-right:1px solid var(--border)}
+  .top-row{display:grid;grid-template-columns:1.24fr 1.76fr;border-bottom:2px solid var(--border);flex-shrink:0}
+  .top-col{padding:6px 14px;border-right:1px solid var(--border)}
   .top-col:last-child{border-right:none}
   .top-col-divider{border-top:1px solid var(--border);margin-top:6px;padding-top:6px}
   /* Methods column — vertically centre the diagram in remaining space */
-  .methods-col{display:flex;flex-direction:column;justify-content:space-between}
-  .methods-col-body{flex:1;display:flex;flex-direction:column;justify-content:flex-start}
-  .methods-col-diagram{flex:1;display:flex;align-items:center;justify-content:center}
-  .methods-col-diagram .flow{margin-top:0}
+  .methods-col{display:flex;flex-direction:column}
+  .methods-col-body{flex:0 0 auto;display:flex;flex-direction:column;justify-content:flex-start}
+  .methods-col-diagram{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+  .methods-col-diagram .flow{margin-top:5px}
   /* Methods output summary block */
   .methods-output{margin-top:10px;border:1px solid var(--border);border-radius:5px;
     overflow:hidden;font-size:11px}
@@ -48,7 +48,7 @@
   .mo-item{display:flex;align-items:baseline;gap:7px;color:var(--muted);line-height:1.45}
   .mo-icon{color:var(--teal);font-size:9px;flex-shrink:0;position:relative;top:-1px}
   /* bottom row */
-  .bottom-row{display:grid;grid-template-columns:1fr 320px;flex:1;min-height:0;overflow:hidden}
+  .bottom-row{display:grid;grid-template-columns:1fr 270px;flex:1;min-height:0;overflow:hidden}
   .hero-panel{padding:10px 0 10px 10px;border-right:1px solid var(--border);
     background:var(--bg);display:flex;flex-direction:column;min-height:0}
   .right-panel{padding:9px 14px;display:flex;flex-direction:column;gap:0;min-height:0;overflow:hidden}
@@ -59,15 +59,15 @@
   .section-header.teal{background:var(--teal)}
   .section-header.gold{background:var(--gold);color:var(--navy)}
   .section-body{color:var(--muted);font-size:12px;line-height:1.5}
-  .right-panel .section-body{font-size:11px;line-height:1.4}
+  .right-panel .section-body{font-size:12px;line-height:1.5}
   .right-section{flex:1;display:flex;flex-direction:column;min-height:0}
   .right-section+.right-section{border-top:1px solid var(--border);padding-top:6px;margin-top:6px}
   /* flow */
   .flow{display:flex;align-items:stretch;justify-content:center;gap:0;margin-top:12px}
   .flow-box{background:var(--white);border:2px solid var(--teal);border-radius:5px;
-    padding:7px 10px;font-size:11px;font-weight:600;color:var(--navy);text-align:center;
+    padding:4px 10px;font-size:11px;font-weight:600;color:var(--navy);text-align:center;
     line-height:1.3;display:flex;flex-direction:column;align-items:center;justify-content:center}
-  .flow-box span{display:block;font-weight:400;font-size:9.5px;color:var(--muted);margin-top:2px}
+  .flow-box span{display:block;font-weight:400;font-size:9.5px;color:var(--muted);margin-top:1px}
   .flow-box.highlight{background:var(--teal);color:var(--white)}
   .flow-box.highlight span{color:rgba(255,255,255,.8)}
   .flow-arrow{color:var(--teal);font-size:20px;padding:0 5px;font-weight:300;display:flex;align-items:center}
@@ -83,25 +83,24 @@
   .agent-connector{font-size:12px;color:var(--teal);line-height:1;text-align:center}
   .validated-q{font-size:9px;color:var(--teal);font-style:italic;text-align:center;margin-top:2px}
   /* hero inner */
-  .hero-inner{display:grid;grid-template-columns:130px 1fr 130px;flex:1;min-height:0;
-    align-items:stretch;position:relative}
-  .callout-spacer{}
+  .hero-inner{display:grid;grid-template-columns:118px 1fr 118px;flex:1;min-height:0;
+    align-items:stretch;position:relative;overflow:visible}
   /* screenshots */
   .screenshots{display:flex;flex-direction:column;background:var(--white);
     border:1.5px solid var(--border);border-radius:6px;overflow:hidden}
-  .screenshots img{width:100%;display:block}
-  .screenshots img:first-child{flex:1.45;object-fit:cover;object-position:top left;min-height:0}
-  .screenshots img:last-child{flex:1;object-fit:cover;object-position:top left;min-height:0;
+  .screenshots img{width:100%;display:block;position:relative}
+  .screenshots img:first-child{flex:1.75;object-fit:cover;object-position:top left;min-height:0;
+    width:calc(100% + 8px);left:-8px}
+  .screenshots img:last-child{flex:.7;object-fit:cover;object-position:top left;min-height:0;
+    width:calc(100% + 8px);left:0;
     border-top:1px solid var(--border)}
   .screenshots.equal img:first-child{flex:.85}
   .screenshots.equal img:last-child{flex:1}
   /* JS-rendered leader elements */
   .leader-svg{position:absolute;top:0;left:0;width:100%;height:100%;
     overflow:visible;pointer-events:none;z-index:4}
-  .callout-left,.callout-right{position:absolute;font-size:10px;font-weight:700;
-    line-height:1.35;z-index:5;max-width:118px}
-  .callout-left{left:0;width:124px;text-align:right;padding-right:8px}
-  .callout-right{right:0;width:124px;text-align:left;padding-left:8px}
+  .callout-label{position:absolute;font-size:10px;font-weight:700;line-height:1.35;
+    z-index:5;width:110px;max-width:110px;pointer-events:none}
   /* coordinate helper (screen only) */
   #coord-btn{position:fixed;bottom:16px;right:16px;z-index:999;
     background:var(--navy);color:#fff;border:none;border-radius:20px;
@@ -138,7 +137,7 @@
   <div class="poster-header">
     <div class="symposium-tag">2026 Queensland<br>AI in Healthcare<br>Symposium</div>
     <div class="header-main">
-      <div class="poster-title">Reducing Cognitive Load in Clinical Decision-Making<br>with GenAI-Powered Report Analysis</div>
+      <div class="poster-title">Reducing Cognitive Load in Clinical Decision-Making with GenAI-Powered Report Analysis</div>
       <div class="poster-subtitle">— a prototype and study proposal</div>
       <div class="poster-authors">Gideon Kowadlo &nbsp;·&nbsp; Yoel Mittelberg &nbsp;·&nbsp; Daniel Stiglitz</div>
     </div>
@@ -148,21 +147,21 @@
     <div class="top-col">
       <div class="section-header">Introduction</div>
       <div class="section-body">Clinicians managing complex patients must manually navigate multiple
-        longitudinal test reports — a cognitively demanding process that makes it difficult to identify
+        longitudinal test reports; a cognitively demanding process that makes it difficult to identify
         trends and synthesise findings at the point of care. The burden of integrating these findings
         can lead to missed insights and suboptimal clinical decisions.</div>
       <div class="top-col-divider">
         <div class="section-header teal">Aims</div>
         <div class="section-body">To develop a system that automatically extracts, summarises, and
           visualises trends from longitudinal patient test reports (structured and unstructured data),
-          and surfaces personalised best-practice clinical recommendations. Evaluated here on
-          respiratory function tests and echocardiograms.</div>
+          and surfaces personalised best-practice clinical recommendations. 
+        </div>
       </div>
     </div>
     <div class="top-col methods-col">
       <div class="section-header">Methods</div>
       <div class="methods-col-body">
-        <div class="section-body">A model-agnostic LLM iteratively processes patients' test reports to
+        <div class="section-body">A model-agnostic analyser utilises an LLM to iteratively processes patients' test reports to
           extract data points for key clinical metrics, plot trends and create a summary. Prompts include
           guardrails to avoid hallucinations. Best-practice recommendations are codified and dynamically
           presented via a personalised rule-based look-up.</div>
@@ -206,7 +205,9 @@
         <div class="section-header teal">Results</div>
         <div class="section-body">The system analysed reports, extracted key information, presented
           trends over time in plot and table formats, provided text-based summaries and gave
-          best-practice clinical recommendations. Results were reviewed by an experienced anaesthetist
+          best-practice clinical recommendations. 
+          It was evaluated on respiratory function tests and echocardiograms. 
+          Results were reviewed by an experienced anaesthetist
           and found to be accurate.</div>
       </div>
       <div class="right-section">
@@ -240,24 +241,26 @@
 /* ╔══════════════════════════════════════════════════════════════════╗
    ║  CALLOUT CONFIGURATION — edit the numbers below to move things  ║
    ║                                                                  ║
+   ║  labelX  — horizontal position of the text label (0=left 100=rt)║
    ║  labelY  — vertical position of the text label  (0=top 100=bot) ║
    ║  touchX  — horizontal position of the dot       (0=left 100=rt) ║
    ║  touchY  — where the dot touches the screenshot (0=top 100=bot) ║
+   ║  align   — text alignment: left, right, or center              ║
    ║                                                                  ║
    ║  TIP: click "📍 Coord helper" in the browser, then hover over   ║
    ║  the screenshot to read off the exact % you want to use.        ║
    ╚══════════════════════════════════════════════════════════════════╝ */
-window.CALLOUTS = {
+globalThis.CALLOUTS = {
   left: [
-    { label: "Advice based on<br>medical knowledge", labelY:  32.5, touchX: 16, touchY:  32, color: "#c0392b" },
-    { label: "Clinical summary",                      labelY: 11,   touchX: 16, touchY: 11,   color: "#1a2f4e" },
-    { label: "Tabular data<br>&amp; synthesis",        labelY: 66,   touchX: 16, touchY: 73,   color: "#2a7fa5" },
+    { label: "Advice based on<br>medical knowledge", labelX: 11.5, labelY:  41, touchX: 13.2, touchY:  37, align: "right", color: "#c0392b" },
+    { label: "Clinical summary",                      labelX: 11.5, labelY: 11,   touchX: 13.2, touchY: 11,   align: "right", color: "#1a2f4e" },
+    { label: "Tabular data<br>&amp; synthesis",        labelX: 11.5, labelY: 70,   touchX: 13.2, touchY: 73,   align: "right", color: "#2a7fa5" },
   ],
   right: [
-    { label: "Lung function<br>trends",          labelY: 13, touchX: 83, touchY:  9, color: "#2e7d5e" },
-    { label: "Echocardiogram<br>trends",          labelY: 36, touchX: 83, touchY: 40, color: "#6c3483" },
-    { label: "Best-practice<br>advice",           labelY: 58, touchX: 68, touchY: 65, color: "#e8a020" },
-    { label: "Download original",                 labelY: 70, touchX: 82, touchY: 64, color: "#2a7fa5" },
+    { label: "Lung function<br>trends",          labelX: 88.5, labelY: 13, touchX: 83, touchY:  9, align: "left", color: "#2e7d5e" },
+    { label: "Echocardiogram<br>trends",          labelX: 88.5, labelY: 36, touchX: 83, touchY: 40, align: "left", color: "#6c3483" },
+    { label: "Best-practice<br>advice",           labelX: 88.5, labelY: 73, touchX: 70, touchY: 77, align: "left", color: "#e8a020" },
+    { label: "Download original",                 labelX: 88.5, labelY: 90, touchX: 87, touchY: 85, align: "left", color: "#2a7fa5" },
   ]
 };
 </script>
@@ -265,8 +268,7 @@ window.CALLOUTS = {
 (function(){
   // ── render callouts from config ──────────────────────────────────────────
   const hi = document.getElementById('hero-inner');
-  const cfg = window.CALLOUTS;
-
+  const cfg = globalThis.CALLOUTS;
   // Build SVG
   const svgNS = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(svgNS,'svg');
@@ -287,22 +289,42 @@ window.CALLOUTS = {
     svg.appendChild(dot);
   }
 
-  cfg.left.forEach(c  => addLeader(13, c.labelY, c.touchX, c.touchY, c.color));
-  cfg.right.forEach(c => addLeader(87, c.labelY, c.touchX, c.touchY, c.color));
+  function labelX(c, fallback){
+    return c.labelX ?? fallback;
+  }
+
+  function labelAlign(c, fallback){
+    return c.align || fallback;
+  }
+
+  cfg.left.forEach(c  => addLeader(labelX(c, 11.5), c.labelY, c.touchX, c.touchY, c.color));
+  cfg.right.forEach(c => addLeader(labelX(c, 88.5), c.labelY, c.touchX, c.touchY, c.color));
   hi.appendChild(svg);
 
   // Build floating labels
-  function makeLabel(cls, yPct, html, color){
+  function makeLabel(c, fallbackX, fallbackAlign){
     const d = document.createElement('div');
-    d.className = cls;
-    d.style.top = yPct + '%';
-    d.style.transform = 'translateY(-50%)';
-    d.style.color = color;
-    d.innerHTML = html;
+    const x = labelX(c, fallbackX);
+    const align = labelAlign(c, fallbackAlign);
+    d.className = 'callout-label';
+    d.style.left = x + '%';
+    d.style.top = c.labelY + '%';
+    d.style.color = c.color;
+    d.style.textAlign = align;
+    if (align === 'right') {
+      d.style.transform = 'translate(-100%, -50%)';
+      d.style.paddingRight = '8px';
+    } else if (align === 'left') {
+      d.style.transform = 'translate(0, -50%)';
+      d.style.paddingLeft = '8px';
+    } else {
+      d.style.transform = 'translate(-50%, -50%)';
+    }
+    d.innerHTML = c.label;
     hi.appendChild(d);
   }
-  cfg.left.forEach(c  => makeLabel('callout-left',  c.labelY, c.label, c.color));
-  cfg.right.forEach(c => makeLabel('callout-right', c.labelY, c.label, c.color));
+  cfg.left.forEach(c  => makeLabel(c, 11.5, 'right'));
+  cfg.right.forEach(c => makeLabel(c, 88.5, 'left'));
 
   // ── coordinate helper ─────────────────────────────────────────────────────
   const btn = document.getElementById('coord-btn');
