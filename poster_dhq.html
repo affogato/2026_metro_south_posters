@@ -92,10 +92,8 @@
   /* JS-rendered leader elements */
   .leader-svg{position:absolute;top:0;left:0;width:100%;height:100%;
     overflow:visible;pointer-events:none;z-index:4}
-  .callout-left,.callout-right{position:absolute;font-size:10px;font-weight:700;
-    line-height:1.28;z-index:5;max-width:104px}
-  .callout-left{left:-22px;width:106px;text-align:right;padding-right:6px}
-  .callout-right{right:-22px;width:106px;text-align:left;padding-left:6px}
+  .callout-label{position:absolute;font-size:10px;font-weight:700;line-height:1.28;
+    z-index:5;width:106px;max-width:106px;pointer-events:none}
   /* coordinate helper (screen only) */
   #coord-btn{position:fixed;bottom:16px;right:16px;z-index:999;
     background:var(--navy);color:#fff;border:none;border-radius:20px;
@@ -238,9 +236,11 @@
 /* ╔══════════════════════════════════════════════════════════════════╗
    ║  CALLOUT CONFIGURATION — edit the numbers below to move things  ║
    ║                                                                  ║
+   ║  labelX  — horizontal position of the text label (0=left 100=rt)║
    ║  labelY  — vertical position of the text label  (0=top 100=bot) ║
    ║  touchX  — horizontal position of the dot       (0=left 100=rt) ║
    ║  touchY  — where the dot touches the screenshot (0=top 100=bot) ║
+   ║  align   — text alignment: left, right, or center              ║
    ║                                                                  ║
    ║  For multiple dots on one label, use a `dots` array instead of  ║
    ║  touchX/touchY:  dots: [{touchX, touchY}, {touchX, touchY}]     ║
@@ -250,21 +250,19 @@
    ╚══════════════════════════════════════════════════════════════════╝ */
 globalThis.CALLOUTS = {
   left: [
-    { label: "Personalised<br>patient greeting",         labelY: 10, touchX: 15.6, touchY:  9,   color: "#1a2f4e" },
-    { label: "Standard<br>baseline questions",            labelY: 32, touchX: 15.6, touchY: 26,   color: "#2a7fa5" },
-    { label: "Adaptive follow-up:<br>insulin → diabetes", labelY: 62, touchX: 15.6, touchY: 55.7, color: "#c0392b" },
+    { label: "Personalised<br>patient greeting",         labelX: 32, labelY: 4.2, touchX: 15.6, touchY:  8,   align: "left", color: "#d35400" },
+    { label: "Standard<br>baseline questions",            labelX: 40, labelY: 45, touchX: 37, touchY: 36,   align: "left", color: "#2a7fa5" },
+    { label: "Adaptive follow-up:<br>insulin → diabetes", labelX: 20, labelY: 90, touchX: 11.5, touchY: 82, align: "left", color: "#c0392b" },
   ],
   right: [
-    { label: "Agent<br>reasoning trace",     labelY: 30, color: "#2e7d5e",
+    { label: "Agent<br>reasoning trace",     labelX: 56, labelY: 34, align: "right", color: "#2e7d5e",
       dots: [
-        { touchX: 85, touchY: 16 },  // orange region — top screenshot
-        { touchX: 83, touchY: 59 },  // orange region — bottom screenshot
+        { touchX: 66, touchY: 25 },  // orange region — top screenshot
       ]
     },
-    { label: "Validated question<br>bank enforced", labelY: 60, color: "#6c3483",
+    { label: "Validated question<br>bank enforced", labelX: 55, labelY: 55, align: "right", color: "#6c3483",
       dots: [
-        { touchX: 85, touchY: 35 },  // blue region — top screenshot
-        { touchX: 78, touchY: 71 },  // blue region — bottom screenshot
+        { touchX: 59, touchY: 53 },  // blue region — top screenshot
       ]
     },
   ]
@@ -296,28 +294,48 @@ globalThis.CALLOUTS = {
     svg.appendChild(dot);
   }
 
+  function labelX(c, fallback){
+    return c.labelX ?? fallback;
+  }
+
+  function labelAlign(c, fallback){
+    return c.align || fallback;
+  }
+
   cfg.left.forEach(c => {
     const dotsArr = c.dots || [{touchX: c.touchX, touchY: c.touchY}];
-    dotsArr.forEach(d => addLeader(11, c.labelY, d.touchX, d.touchY, c.color));
+    dotsArr.forEach(d => addLeader(labelX(c, 11), c.labelY, d.touchX, d.touchY, c.color));
   });
   cfg.right.forEach(c => {
     const dotsArr = c.dots || [{touchX: c.touchX, touchY: c.touchY}];
-    dotsArr.forEach(d => addLeader(89, c.labelY, d.touchX, d.touchY, c.color));
+    dotsArr.forEach(d => addLeader(labelX(c, 89), c.labelY, d.touchX, d.touchY, c.color));
   });
   hi.appendChild(svg);
 
   // Build floating labels
-  function makeLabel(cls, yPct, html, color){
+  function makeLabel(c, fallbackX, fallbackAlign){
     const d = document.createElement('div');
-    d.className = cls;
-    d.style.top = yPct + '%';
-    d.style.transform = 'translateY(-50%)';
-    d.style.color = color;
-    d.innerHTML = html;
+    const x = labelX(c, fallbackX);
+    const align = labelAlign(c, fallbackAlign);
+    d.className = 'callout-label';
+    d.style.left = x + '%';
+    d.style.top = c.labelY + '%';
+    d.style.color = c.color;
+    d.style.textAlign = align;
+    if (align === 'right') {
+      d.style.transform = 'translate(-100%, -50%)';
+      d.style.paddingRight = '6px';
+    } else if (align === 'left') {
+      d.style.transform = 'translate(0, -50%)';
+      d.style.paddingLeft = '6px';
+    } else {
+      d.style.transform = 'translate(-50%, -50%)';
+    }
+    d.innerHTML = c.label;
     hi.appendChild(d);
   }
-  cfg.left.forEach(c  => makeLabel('callout-left',  c.labelY, c.label, c.color));
-  cfg.right.forEach(c => makeLabel('callout-right', c.labelY, c.label, c.color));
+  cfg.left.forEach(c  => makeLabel(c, 11, 'right'));
+  cfg.right.forEach(c => makeLabel(c, 89, 'left'));
 
   // ── coordinate helper ─────────────────────────────────────────────────────
   const btn = document.getElementById('coord-btn');
