@@ -6,6 +6,7 @@ node_modules/
 
 # Generated Poster Files
 *_final.png
+*_preview.png
 *_print.png
 *_a0*.png
 *_300dpi_margin.png

@@ -16,21 +16,19 @@ This project contains HTML/CSS templates and scripts to generate high-resolution
 
 ## Usage
 
-To generate the posters, run the generation script:
-
+### High-Resolution (Print)
+To generate the full A0 300 DPI posters for printing:
 ```bash
 node generate_posters.js
 ```
+Outputs: `poster_v2_final.png`, `poster_dhq_final.png` (~14000px wide)
 
-This script will:
-1.  Launch a headless browser (Puppeteer).
-2.  Load `poster_v2.html` and `poster_dhq.html`.
-3.  Calculate the exact scaling required to fit the content into an A0 canvas (14043 x 9933 px) minus a 10mm margin.
-4.  Capture the poster in high-resolution tiles to avoid browser memory limits.
-5.  Stitch the tiles together using `sharp`.
-6.  Output the final files:
-    - `poster_v2_final.png`
-    - `poster_dhq_final.png`
+### Screen / Email (Preview)
+To generate smaller, retina-quality versions for emailing or sharing on screens:
+```bash
+node generate_previews.js
+```
+Outputs: `poster_v2_preview.png`, `poster_dhq_preview.png` (~2400px wide)
 
 ## Adjusting Content
 
